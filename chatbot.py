@@ -4,7 +4,6 @@ import sys
 import json
 from datetime import datetime
 import time
-from PIL import Image
 import argparse
 from googletrans import Translator
 
