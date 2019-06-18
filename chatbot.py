@@ -39,4 +39,4 @@ def translate():
  
     
 if __name__ == '__main__':
-	app.run(port="8889",debug=True)
+	app.run(debug=True, use_reloader=True)
