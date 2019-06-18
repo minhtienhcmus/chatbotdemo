@@ -1,1 +1,1 @@
-web: bundle exec intense-wave-44164 server -p $PORT
+python chatbot.py
