@@ -1,0 +1,119 @@
+.head {
+  width: 520px;
+  height: 100%;
+  position:relative;
+  margin: 0 auto;
+  border: 2px solid black;
+  font: 32px/1.3 sans-serif;
+  padding: 0;
+  background: linear-gradient(rgb(255, 143, 178) 0%, rgb(167, 151, 255) 50%, rgb(0, 229, 255) 100%);
+}
+	.messages {
+  width: 520px;
+  height: 500px;
+  margin: 0 auto;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  font: 16px/1.3 sans-serif;
+  overflow: auto;
+  padding: 0;
+}
+
+.img {
+  float:left;
+  background: white;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.messages:after {
+  content: '';
+  background: white;
+  flex: 1;
+  pointer-events: none;
+}
+
+.messages li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px 16px 2px 8px;
+  flex: 0 0 auto;
+}
+
+.messages li.me {
+  flex-direction: row;
+  border-right-width: 4px;
+  border-left-width: 6px;
+  float: right;
+}
+
+.messages li:first-child {
+  border-top-width: 10px;
+}
+
+.messages li:last-child {
+  border-bottom-width: 10px;
+}
+
+.messages li:before {
+  content: '';
+  flex: 1;
+  background: white;
+  pointer-events: none;
+}
+
+.messages li span {
+  background: #eee;
+  padding: 8px;
+  position: relative;
+}
+
+.messages li span:before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  bottom: -8px;
+  right: -1.2px;
+  border: 8px solid white;
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.messages li.me span { 
+  background: linear-gradient(rgb(255, 143, 178) 0%, rgb(167, 151, 255) 50%, rgb(0, 229, 255) 100%);
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.messages li.bot {
+  flex-direction: row;
+  border-right-width: 4px;
+  border-left-width: 6px;
+  padding: 15px;
+  text-align: center;
+  float: left;
+  clear: both;
+}
+#translate input{
+  font-size:14pt;
+  width: 80%;
+  border: 8px solid white;
+  border-radius: 16px;
+  margin-left: 5px;
+}
+.taginput{
+  margin-bottom: 10px;
+}
+.message_chat{
+  margin-top: 20px;
+  width:100%;
+  clear: both;
+}
