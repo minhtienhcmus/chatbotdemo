@@ -22,4 +22,4 @@ def translate():
     return json.dumps({"me":string_me,"bot":string_bot})
  
 if __name__ == '__main__':
-	app.run(port="8889",debug=True)
+	app.run(debug=True, use_reloader=True)
