@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Chatbot</title>
+    <script src="../static/js/jquery-1.11.1.min.js"></script>
+	<style>
+
+.head {
+  width: 520px;
+  height: 100%;
+  position:relative;
+  margin: 0 auto;
+  border: 2px solid black;
+  font: 32px/1.3 sans-serif;
+  padding: 0;
+  background: linear-gradient(rgb(255, 143, 178) 0%, rgb(167, 151, 255) 50%, rgb(0, 229, 255) 100%);
+}
+	.messages {
+  width: 520px;
+  height: 500px;
+  margin: 0 auto;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  font: 16px/1.3 sans-serif;
+  overflow: auto;
+  padding: 0;
+}
+
+.img {
+  float:left;
+  background: white;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.messages:after {
+  content: '';
+  background: white;
+  flex: 1;
+  pointer-events: none;
+}
+
+.messages li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px 16px 2px 8px;
+  flex: 0 0 auto;
+}
+
+.messages li.mine {
+  flex-direction: row;
+  border-right-width: 4px;
+  border-left-width: 6px;
+  float: right;
+}
+
+.messages li:first-child {
+  border-top-width: 10px;
+}
+
+.messages li:last-child {
+  border-bottom-width: 10px;
+}
+
+.messages li:before {
+  content: '';
+  flex: 1;
+  background: white;
+  pointer-events: none;
+}
+
+.messages li span {
+  background: #eee;
+  padding: 8px;
+  position: relative;
+}
+
+.messages li span:before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  bottom: -8px;
+  right: -1.2px;
+  border: 8px solid white;
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.messages li.mine span { 
+  background: linear-gradient(rgb(255, 143, 178) 0%, rgb(167, 151, 255) 50%, rgb(0, 229, 255) 100%);
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.messages li.robot {
+  flex-direction: row;
+  border-right-width: 4px;
+  border-left-width: 6px;
+  padding: 15px;
+  text-align: center;
+  float: left;
+  clear: both;
+}
+#translate input{
+  font-size:14pt;
+  width: 80%;
+  border: 8px solid white;
+  border-radius: 16px;
+  margin-left: 5px;
+}
+.taginput{
+  margin-bottom: 10px;
+}
+.message_chat{
+  margin-top: 20px;
+  width:100%;
+  clear: both;
+}
+	</style>
+</head>
+
+<body>
+
+	<div >
+      <div><h1 class="head" style=" text-align: center;">AI_QN ChatBot Translater</h1></div>
+
+	    <ol class="messages">
+	      <div id="bot">
+	      </div>
+      </ol>
+
+    <div class="head">
+        <div id="translate">
+          <div style="clear:both;"></div>
+            <div class="taginput">
+              <input placeholder="Your message" id="text" type="text" name="fname">
+              <button id="summit" style="border-radius: 50%; margin-left: 10px; margin-top: 5px; margin-right: 10px; float: right;"><img style="width:30px;height:30px;" src="./static/icon_1.png"></img></button>
+            </div>
+
+          </div>
+       
+    </div>
+
+	</div>
+
+    <script>
+        window.addEventListener('keypress', function (e) {
+            if (e.keyCode == 13 ) {
+                e.preventDefault();
+                ajaxFunction();
+            }
+        }, false);
+        document.getElementById('summit').onclick = function() {
+          ajaxFunction();
+        }
+
+        function ajaxFunction() {
+            var stringtext = document.getElementById('text').value;
+
+            $.ajax({
+                url: '/translate',
+                data: stringtext.toString(),
+                type: 'POST',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                  console.log("nnnn");
+                    console.log(response.status);
+                    var temp = JSON.parse(response)
+                    var str_me = temp["me"]
+                    var str_bot = temp["bot"]
+                    document.getElementById('text').value ="";
+
+
+                    var div = document.createElement("DIV");
+                    var li = document.createElement("LI");
+                    var span = document.createElement("SPAN")
+                    var img = document.createElement("IMG");
+                    img.setAttribute("class","img");
+                    img.setAttribute("src","./static/person_1.png");
+                    span.innerHTML=str_me;
+                    li.appendChild(span);
+                    li.appendChild(img);
+                    li.setAttribute("class","mine");
+                    div.appendChild(li);
+                    div.setAttribute("class","message_chat")
+                    document.getElementById("bot").appendChild(div);
+
+
+                    var li_bot = document.createElement("LI");
+                    var span_bot = document.createElement("SPAN");
+                    var img_bot = document.createElement("IMG");
+                    img_bot.setAttribute("class","img");
+                    img_bot.setAttribute("src","./static/bot_1.png");
+                    span_bot.innerHTML=str_bot;
+                    li_bot.appendChild(img_bot);
+                    li_bot.appendChild(span_bot);
+                    li_bot.setAttribute("class","robot");
+                    document.getElementById("bot").appendChild(li_bot);
+
+                    console.log(str_me);
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+    </script>
+
+</body>
