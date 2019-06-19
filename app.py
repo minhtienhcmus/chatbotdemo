@@ -1,42 +1,25 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort,url_for,send_from_directory,make_response
-import os
-import sys
 import json
-from datetime import datetime
-import time
-import argparse
 from googletrans import Translator
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # translator = Translator()
-    # #demo detect language
-    # langs = translator.detect(['한국어', '日本語', 'English', 'le français',"viet nam"])
-    # for lang in langs:
-    #     print(lang.lang, lang.confidence)
-    return render_template("index.html")
+    return render_template("new_index.html")
 
-@app.route('/translate',methods=['POST'])
+@app.route('/translate',methods=['GET', 'POST'])
 def translate():
-    print("abc")
-    print(request.method)
-    text = request.data.decode('utf-8')
-    print(text)
+    text=request.data.decode('utf-8')
     translator = Translator()
-    langs = translator.detect(['한국어', '日本語', 'English', 'le français',"viet nam"])
-    for lang in langs:
-        print(lang.lang, lang.confidence)
     print("translating ...")
     translations = translator.translate([text], dest='vi')
     for translation in translations:
         print(translation.origin, ' -> ', translation.text)
-
-    output=translation.text
-
-    return json.dumps({"text":output})
+    string_me=text
+    string_bot=translation.text
+    print("done")
+    return json.dumps({"me":string_me,"bot":string_bot})
  
-    
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True)
